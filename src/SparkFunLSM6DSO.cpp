@@ -424,6 +424,12 @@ bool LSM6DSO::initialize(uint8_t settings){
     //setFreeFall(true);
    // getFreeFall();
   }
+  else if( settings == CUSTOM_SETTINGS ) {
+    setAccelRange(4);
+    setAccelDataRate(104);
+    setGyroRange(250);
+    setGyroDataRate(104);
+    setBlockDataUpdate(true);
 
   return true;
 

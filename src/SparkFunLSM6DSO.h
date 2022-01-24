@@ -152,6 +152,7 @@ public:
 #define PEDOMETER_SETTINGS 0x04
 #define TAP_SETTINGS 0x05
 #define FREE_FALL_SETTINGS 0x06
+#define CUSTOM_SETTINGS 0x07
 
 class LSM6DSO : public LSM6DSOCore
 {
