@@ -430,6 +430,7 @@ bool LSM6DSO::initialize(uint8_t settings){
     setGyroRange(250);
     setGyroDataRate(104);
     setBlockDataUpdate(true);
+    }
 
   return true;
 
