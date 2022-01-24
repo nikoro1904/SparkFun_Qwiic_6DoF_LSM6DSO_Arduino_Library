@@ -186,6 +186,7 @@ class LSM6DSO : public LSM6DSOCore
     uint8_t  getAccelFullScale();
     uint8_t  getAccelHighPerf();
 
+    status_t get_all_IMU_data(int16_t*, bool);
     int16_t readRawAccelX();
     int16_t readRawAccelY();
     int16_t readRawAccelZ();

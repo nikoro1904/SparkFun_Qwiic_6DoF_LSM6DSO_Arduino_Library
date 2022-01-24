@@ -949,6 +949,41 @@ uint8_t LSM6DSO::getAccelFullScale(){
     return ((regVal & 0x02) >> 1); 
 }
 
+/*
+ * Read all movement values from IMU at once.
+ * Decoding them is still needed (but could also be done later).
+ * This fastens up I2C reading and simplifies querying the IMU.
+ * 
+ * Reads all (raw) Accelerometer and Gyroscope data and stores them in an int16_t array.
+ * Massive speed improve compared to asking for all values separately.
+ * 
+ * Parameters:
+ *  - int16_t data[]: Array for storing the values. Must have length of 6
+ *  - LSM6DSO &imu: The imu to read from
+ *  - bool with_temp: select if you want to read temperature or not
+*/
+status_t LSM6DSO::get_all_IMU_data(int16_t data[], bool with_temp=true) {
+  uint8_t num_bytes;
+  uint8_t startAdress;
+  if(with_temp) {
+    num_bytes = 14;
+    startAdress = 0x20;
+  }
+  else {
+    num_bytes = 12;
+    startAdress = 0x22;
+  }
+
+  uint8_t temp_data[num_bytes];
+
+  status_t return_error = readMultipleRegisters(temp_data, startAdress, num_bytes);
+  for(int i=0; i<num_bytes/2; i++) {
+    data[i] = temp_data[i] | static_cast<uint16_t>(temp_data[i+1] << 8);
+  }
+
+  return return_error;
+}
+
 int16_t LSM6DSO::readRawAccelX() {
 
 	int16_t output;
