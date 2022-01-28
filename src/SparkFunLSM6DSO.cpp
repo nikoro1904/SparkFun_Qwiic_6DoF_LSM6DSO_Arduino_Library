@@ -979,23 +979,15 @@ uint8_t LSM6DSO::getAccelFullScale(){
  *  - LSM6DSO &imu: The imu to read from
  *  - bool with_temp: select if you want to read temperature or not
 */
-status_t LSM6DSO::get_all_IMU_data(int16_t data[], bool with_temp=true) {
-  uint8_t num_bytes;
-  uint8_t startAdress;
-  if(with_temp) {
-    num_bytes = 14;
-    startAdress = 0x20;
-  }
-  else {
-    num_bytes = 12;
-    startAdress = 0x22;
-  }
+status_t LSM6DSO::getAllMovementData(int16_t data[]) {
+  uint8_t num_bytes = 12; // 12 because we want to read 6 values in 2 regs each
+  uint8_t startAdress = OUTX_L_G; // OUTX_L_G = 0x22 (lowest valued out register)
 
   uint8_t temp_data[num_bytes];
 
   status_t return_error = readMultipleRegisters(temp_data, startAdress, num_bytes);
   for(int i=0; i<num_bytes/2; i++) {
-    data[i] = temp_data[i] | static_cast<uint16_t>(temp_data[i+1] << 8);
+    data[i] = temp_data[2*i] | static_cast<uint16_t>(temp_data[2*i+1] << 8);
   }
 
   return return_error;
