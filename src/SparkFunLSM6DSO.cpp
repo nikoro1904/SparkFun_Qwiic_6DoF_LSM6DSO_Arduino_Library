@@ -93,7 +93,7 @@ status_t LSM6DSOCore::beginSPICore(uint8_t csPin, uint32_t spiPortSpeed, SPIClas
 status_t LSM6DSOCore::readMultipleRegisters(uint8_t outputPointer[], uint8_t address, uint8_t numBytes)
 {
 
-	status_t returnError;
+	// status_t returnError;
   uint8_t byteReturn;
 
 	switch( commInterface ){
@@ -147,7 +147,7 @@ status_t LSM6DSOCore::readMultipleRegisters(uint8_t outputPointer[], uint8_t add
 //****************************************************************************//
 status_t LSM6DSOCore::readRegister(uint8_t* outputPointer, uint8_t address) {
 
-	status_t returnError; 
+	// status_t returnError; 
   uint8_t byteReturn;
 
 	switch (commInterface) {
@@ -213,7 +213,7 @@ status_t LSM6DSOCore::readRegisterInt16(int16_t* outputPointer, uint8_t address)
 //****************************************************************************//
 status_t LSM6DSOCore::writeRegister(uint8_t address, uint8_t dataToWrite) {
 
-	status_t returnError;
+	// status_t returnError;
 
 	switch (commInterface) {
 
@@ -256,7 +256,7 @@ status_t LSM6DSOCore::writeRegister(uint8_t address, uint8_t dataToWrite) {
 //****************************************************************************//
 status_t LSM6DSOCore::writeMultipleRegisters(uint8_t inputPointer[], uint8_t address, uint8_t numBytes) {
 
-	status_t returnError;
+	// status_t returnError;
 
 	switch( commInterface ){
 
@@ -348,7 +348,7 @@ bool LSM6DSO::begin(uint8_t address, TwoWire &i2cPort){
   if( address != DEFAULT_ADDRESS && address != ALT_ADDRESS )
     return false;
 
-  uint8_t regVal;
+  // uint8_t regVal;
 	status_t returnError = beginCore(address, i2cPort);
   if( returnError != IMU_SUCCESS )
     return false;
@@ -721,7 +721,7 @@ bool LSM6DSO::setHighPerfGyro(bool enable){
 // Sets the acceleration range of the accleromter portion of the IMU.
 bool LSM6DSO::setAccelRange(uint8_t range) {
 
-  if( range < 0  | range > 16)
+  if( (range < 0)  | (range > 16) )
     return false; 
 
   uint8_t regVal;
@@ -814,7 +814,7 @@ uint8_t LSM6DSO::getAccelRange(){
 // Sets the output data rate of the accelerometer there-by enabling it. 
 bool LSM6DSO::setAccelDataRate(uint16_t rate) {
 
-  if( rate < 16  | rate > 6660) 
+  if( (rate < 16)  | (rate > 6660) ) 
     return false; 
 
   uint8_t regVal;
@@ -1107,7 +1107,7 @@ float LSM6DSO::calcAccel( int16_t input )
 // Sets the gyro's output data rate thereby enabling it.  
 bool LSM6DSO::setGyroDataRate(uint16_t rate) {
 
-  if( rate < 125 | rate > 6660 ) 
+  if( (rate < 125) | (rate > 6660) ) 
     return false; 
 
   uint8_t regVal;
@@ -1208,7 +1208,7 @@ float LSM6DSO::getGyroDataRate(){
 // Sets the gyroscope's range.
 bool LSM6DSO::setGyroRange(uint16_t range) {
 
-  if( range < 250 | range > 2000)
+  if( (range < 250) | (range > 2000) )
     return false;
 
   uint8_t regVal;
@@ -1423,7 +1423,7 @@ void LSM6DSO::fifoBeginSettings() {
   tempFIFO_CTRL4 &= 0xF8;
   // Merge bits
   tempFIFO_CTRL4 |= imuSettings.fifoModeWord;
-	if (imuSettings.gyroFifoEnabled == 1 | imuSettings.accelFifoEnabled == 1)
+	if ( (imuSettings.gyroFifoEnabled == 1) | (imuSettings.accelFifoEnabled == 1))
 	{
 		//Decimation is calculated as max rate between accel and gyro
     //Clear decimation bits
@@ -1450,7 +1450,7 @@ void LSM6DSO::fifoBeginSettings() {
 // Sets the fifo mode. 
 bool LSM6DSO::setFifoMode(uint8_t mode) {
 
-  if( mode < 0 | mode > 7)
+  if( (mode < 0) | (mode > 7) )
     return false;
 
   uint8_t regVal;
@@ -1485,7 +1485,7 @@ uint8_t LSM6DSO::getFifoMode(){
 // is 511
 bool LSM6DSO::setFifoDepth(uint16_t depth) {
 
-  if( depth < 0 | depth > 511 )
+  if( (depth < 0) | (depth > 511) )
     return false;
 
   uint8_t dataToWrite[2];
@@ -1523,7 +1523,7 @@ uint16_t LSM6DSO::getFifoDepth(){
 // Sets the accelerometer's batch data rate for the FIFO. 
 bool LSM6DSO::setAccelBatchDataRate(uint16_t rate) {
 
-  if( rate < 16 | rate > 1660 )
+  if( (rate < 16) | (rate > 1660) )
     return false;
 
   uint8_t regVal;
@@ -1622,7 +1622,7 @@ float LSM6DSO::getAccelBatchDataRate() {
 // Sets the gyroscope's batch data rate for the FIFO. 
 bool LSM6DSO::setGyroBatchDataRate(uint16_t rate) {
 
-  if( rate < 65 | rate > 6667 )
+  if( (rate < 65) | (rate > 6667) )
     return false; 
   
   uint8_t regVal;
@@ -1740,11 +1740,11 @@ fifoData LSM6DSO::fifoRead() {
 
   tempFifoData.fifoTag = tempTagByte;
 
-  if( tempTagByte == ACCELEROMETER_DATA | 
-      tempTagByte == ACCELERTOMETER_DATA_T_1 | 
-      tempTagByte == ACCELERTOMETER_DATA_T_2 | 
-      tempTagByte == ACCELERTOMETER_DATA_2xC | 
-      tempTagByte == ACCELERTOMETER_DATA_3xC) {
+  if( (tempTagByte == ACCELEROMETER_DATA) | 
+      (tempTagByte == ACCELERTOMETER_DATA_T_1) | 
+      (tempTagByte == ACCELERTOMETER_DATA_T_2) | 
+      (tempTagByte == ACCELERTOMETER_DATA_2xC) | 
+      (tempTagByte == ACCELERTOMETER_DATA_3xC) ) {
 
     readRegisterInt16(&tempData, FIFO_DATA_OUT_X_L);
     tempFifoData.xAccel = calcAccel(tempData);
@@ -1755,11 +1755,11 @@ fifoData LSM6DSO::fifoRead() {
   }
 
 
-  if( tempTagByte == GYROSCOPE_DATA | 
-      tempTagByte == GYRO_DATA_T_1 | 
-      tempTagByte == GYRO_DATA_T_2 | 
-      tempTagByte == GYRO_DATA_2xC | 
-      tempTagByte == GYRO_DATA_3xC) {
+  if( (tempTagByte == GYROSCOPE_DATA) | 
+      (tempTagByte == GYRO_DATA_T_1) | 
+      (tempTagByte == GYRO_DATA_T_2) | 
+      (tempTagByte == GYRO_DATA_2xC) | 
+      (tempTagByte == GYRO_DATA_3xC) ) {
 
     readRegisterInt16(&tempData, FIFO_DATA_OUT_X_L);
     tempFifoData.xGyro = calcGyro(tempData);
@@ -1781,7 +1781,7 @@ fifoData LSM6DSO::fifoRead() {
 
 uint16_t LSM6DSO::getFifoStatus() {
 
-	uint8_t regVal;
+	// uint8_t regVal;
 	int16_t numBytes;
 
 	readRegisterInt16(&numBytes, FIFO_STATUS1);
@@ -1915,7 +1915,7 @@ bool LSM6DSO::enableTap(bool enable, bool xEnable, bool yEnable, bool zEnable) {
 // prioritized over a Y-direction tap etc. 
 bool LSM6DSO::setTapDirPrior(uint8_t prior) {
   
-  if(  prior < 0 | prior > 0x08 )
+  if(  (prior < 0) | (prior > 0x08) )
     return false;
 
   uint8_t regVal;
@@ -2027,7 +2027,7 @@ bool LSM6DSO::listenStep() {
 // Routes the given interrupt to hardware pin one. 
 bool LSM6DSO::routeHardInterOne(uint8_t interrupt) {
 
-  if( interrupt < 0 | interrupt > 0x80 )
+  if( (interrupt < 0) | (interrupt > 0x80) )
     return false; 
 
   uint8_t regVal;
@@ -2048,7 +2048,7 @@ bool LSM6DSO::routeHardInterOne(uint8_t interrupt) {
 // Routes the given interrupt to hardware pin two. 
 bool LSM6DSO::routeHardInterTwo(uint8_t interrupt) {
 
-  if( interrupt < 0 | interrupt > 0x80 )
+  if( (interrupt < 0) | (interrupt > 0x80) )
     return false; 
 
   uint8_t regVal;
@@ -2120,7 +2120,7 @@ uint8_t LSM6DSO::clearTapInt() {
 // Sets the threshold for x-axis tap recognintion.
 bool LSM6DSO::setXThreshold(uint8_t thresh) {
 
-  if( thresh < 0 | thresh > 31 )
+  if( (thresh < 0) | (thresh > 31) )
     return false;
 
   uint8_t regVal;
@@ -2140,7 +2140,7 @@ bool LSM6DSO::setXThreshold(uint8_t thresh) {
 // writes the entier register. 
 bool LSM6DSO::configureTap(uint8_t settings) {
 
-  uint8_t regVal;
+  // uint8_t regVal;
 
   status_t returnError =  writeRegister(INT_DUR2, settings);
   if( returnError != IMU_SUCCESS )
