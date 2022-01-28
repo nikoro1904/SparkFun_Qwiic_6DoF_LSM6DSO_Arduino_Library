@@ -454,10 +454,14 @@ status_t LSM6DSO::beginSettings() {
 		case 8:
 			dataToWrite |= FS_XL_8g;
 			break;
-		default:  //set default case to 16(max)
 		case 16:
 			dataToWrite |= FS_XL_16g;
 			break;
+        default:  //set default case to 16(max)
+            dataToWrite |= FS_XL_16g;
+            break;
+
+
 		}
 		// Accelerometer ODR
 		switch (imuSettings.accelSampleRate) {
@@ -473,7 +477,6 @@ status_t LSM6DSO::beginSettings() {
 		case 52:
 			dataToWrite |= ODR_XL_52Hz;
 			break;
-		default:  //Set default to 104
 		case 104:
 			dataToWrite |= ODR_XL_104Hz;
 			break;
@@ -494,6 +497,9 @@ status_t LSM6DSO::beginSettings() {
 			break;
 		case 6660:
 			dataToWrite |= ODR_XL_6660Hz;
+			break;
+        default:  //Set default to 104
+			dataToWrite |= ODR_XL_104Hz;
 			break;
 		}
 	}
@@ -518,10 +524,13 @@ status_t LSM6DSO::beginSettings() {
 		case 1000:
 			dataToWrite |=  FS_G_1000dps;
 			break;
-		default:  //Default to full 2000DPS range
 		case 2000:
 			dataToWrite |=  FS_G_2000dps;
 			break;
+        default:  //Default to 500 dps range
+            dataToWrite |=  FS_G_500dps;
+			break;
+
 		}
 		switch (imuSettings.gyroSampleRate) { 
 		case 125:
@@ -533,7 +542,6 @@ status_t LSM6DSO::beginSettings() {
 		case 52:
 			dataToWrite |= ODR_GYRO_52Hz;
 			break;
-		default:  //Set default to 104
 		case 104:
 			dataToWrite |= ODR_GYRO_104Hz;
 			break;
@@ -555,6 +563,8 @@ status_t LSM6DSO::beginSettings() {
 		case 6660:
 			dataToWrite |= ODR_GYRO_6660Hz;
 			break;
+        default:  //Set default to 104
+			dataToWrite |= ODR_GYRO_104Hz;
 		}
 	}
 	
