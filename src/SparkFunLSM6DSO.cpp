@@ -322,20 +322,20 @@ LSM6DSO::LSM6DSO()
 
 	imuSettings.gyroEnabled = true;  //Can be 0 or 1
 	imuSettings.gyroRange = 500;   //Max deg/s.  Can be: 125, 250, 500, 1000, 2000
-	imuSettings.gyroSampleRate = 416;   //Hz.  Can be: 13, 26, 52, 104, 208, 416, 833, 1666
+	imuSettings.gyroSampleRate = 104;   //Hz.  Can be: 13, 26, 52, 104, 208, 416, 833, 1666
 	imuSettings.gyroBandWidth = 400;  //Hz.  Can be: 50, 100, 200, 400;
-	imuSettings.gyroFifoEnabled = 1;  //Set to include gyro in FIFO
-	imuSettings.gyroAccelDecimation = 1;  //Set to include gyro in FIFO
+	imuSettings.gyroFifoEnabled = 0;  //Set to include gyro in FIFO
+	imuSettings.gyroAccelDecimation = 0;  //Set to include gyro in FIFO
 
 	imuSettings.accelEnabled = true;
-	imuSettings.accelRange = 8;      //Max G force readable.  Can be: 2, 4, 8, 16
-	imuSettings.accelSampleRate = 416;  //Hz.  Can be: 1.6 (16), 12.5 (125), 26, 52, 104, 208, 416, 833, 1660, 3330, 6660
-	imuSettings.accelFifoEnabled = 1;  //Set to include accelerometer in the FIFO
+	imuSettings.accelRange = 4;      //Max G force readable.  Can be: 2, 4, 8, 16
+	imuSettings.accelSampleRate = 104;  //Hz.  Can be: 1.6 (16), 12.5 (125), 26, 52, 104, 208, 416, 833, 1660, 3330, 6660
+	imuSettings.accelFifoEnabled = 0;  //Set to include accelerometer in the FIFO
 
-  imuSettings.fifoEnabled = true;
-	imuSettings.fifoThreshold = 3000;  //Can be 0 to 4096 (16 bit bytes)
-	imuSettings.fifoSampleRate = 416; 
-	imuSettings.fifoModeWord = 0;  //Default off
+	imuSettings.fifoEnabled = false;
+	//imuSettings.fifoThreshold = 3000;  //Can be 0 to 4096 (16 bit bytes)
+	//imuSettings.fifoSampleRate = 416; 
+	//imuSettings.fifoModeWord = 0;  //Default off
 
 	allOnesCounter = 0;
 	nonSuccessCounter = 0;
