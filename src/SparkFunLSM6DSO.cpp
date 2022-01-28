@@ -323,7 +323,7 @@ LSM6DSO::LSM6DSO()
 	imuSettings.gyroEnabled = true;  //Can be 0 or 1
 	imuSettings.gyroRange = 500;   //Max deg/s.  Can be: 125, 250, 500, 1000, 2000
 	imuSettings.gyroSampleRate = 104;   //Hz.  Can be: 13, 26, 52, 104, 208, 416, 833, 1666
-	imuSettings.gyroBandWidth = 400;  //Hz.  Can be: 50, 100, 200, 400;
+	imuSettings.gyroBandWidth = 400;  //Hz.  Can be: 50, 100, 200, 400; (doesnt exist)
 	imuSettings.gyroFifoEnabled = 0;  //Set to include gyro in FIFO
 	imuSettings.gyroAccelDecimation = 0;  //Set to include gyro in FIFO
 
@@ -2084,7 +2084,13 @@ bool LSM6DSO::setIncrement(bool enable) {
       return false;
 
   regVal &= 0xFD;
-  regVal |= IF_INC_ENABLED;
+  if(enable) {
+    regVal |= IF_INC_ENABLED;
+    }
+  else {
+    regVal |= IF_INC_DISABLED;
+  }
+
 
   returnError = writeRegister(CTRL3_C, regVal);
   if( returnError != IMU_SUCCESS )

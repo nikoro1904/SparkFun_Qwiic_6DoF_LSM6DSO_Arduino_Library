@@ -882,7 +882,7 @@ typedef enum {
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-	IF_INC_DISABLED 		 = 0x00,
+	IF_INC_DISABLED 	 = 0x00,
 	IF_INC_ENABLED 		 = 0x04,
 } LSM6DSO_IF_INC_t;
 
