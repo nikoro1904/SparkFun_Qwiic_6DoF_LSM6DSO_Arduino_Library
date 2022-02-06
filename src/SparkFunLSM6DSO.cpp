@@ -967,6 +967,21 @@ uint8_t LSM6DSO::getAccelFullScale(){
 }
 
 /*
+ * reads STATUSREG (0x1E) from IMU and checks if bits 0 (XLDA) and 1 (GDA) are set.
+ * If they are both set, there is new data (for both of them) and the function returns true.
+ * Doesn't check for new temperature data.
+ * 
+ * Parameters:
+ * - none
+ * Returns:
+ * - true if there is no data, false if not
+ */
+bool LSM6DSO::movementDataAvailable() {
+    uint8_t statusReg = listenDataReady();
+    return (statusReg != 255) && ((statusReg & 0x03) == 0x03);
+}
+
+/*
  * Read all movement values from IMU at once.
  * Decoding them is still needed (but could also be done later).
  * This fastens up I2C reading and simplifies querying the IMU.
@@ -987,7 +1002,6 @@ status_t LSM6DSO::getAllMovementData(int16_t data[]) {
   for(int i=0; i<num_bytes/2; i++) {
     data[i] = temp_data[2*i] | static_cast<uint16_t>(temp_data[2*i+1] << 8);
   }
-
   return return_error;
 }
 

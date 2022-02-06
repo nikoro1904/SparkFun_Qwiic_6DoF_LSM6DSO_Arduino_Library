@@ -187,6 +187,7 @@ class LSM6DSO : public LSM6DSOCore
     uint8_t  getAccelFullScale();
     uint8_t  getAccelHighPerf();
 
+    bool movementDataAvailable();
     status_t getAllMovementData(int16_t*);
     status_t getAllMovementData(uint8_t*);
     int16_t readRawAccelX();
